@@ -1,5 +1,17 @@
 {
-  "server": [],
+  "server": [
+    {
+      "nick": "Apelsin4ik",
+      "username": "soda_crackhouse",
+      "id": "959414199509975091",
+      "avatar": "https://cdn.discordapp.com/avatars/959414199509975091/e65422938db2b5b844a02c7b4e0728d4.png?size=1024",
+      "tags": "Угроза безопасности проекта",
+      "reason": "Чрезмерная токсичность, неадекватное поведение, провокации на конфликты и прочее...",
+      "type": "server",
+      "date": "2026-02-24T19:00:33.517882",
+      "added_by": "927519847884148797"
+    }
+  ],
   "staff": [
     {
       "nick": "crystalcastles.",
