@@ -1,1 +1,16 @@
-{"server":[],"staff":[]}
+{
+  "server": [],
+  "staff": [
+    {
+      "nick": "crystalcastles.",
+      "username": "crystalcastles.",
+      "id": "725029884266545213",
+      "avatar": "https://cdn.discordapp.com/avatars/725029884266545213/dd1b022cf55ed21e174df0dea467f2c9.png?size=1024",
+      "tags": "-",
+      "reason": "-",
+      "type": "staff",
+      "date": "2026-02-24T18:44:51.171200",
+      "added_by": "927519847884148797"
+    }
+  ]
+}
