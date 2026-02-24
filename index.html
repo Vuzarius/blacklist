@@ -1,1 +1,518 @@
-сосал?
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vexus — Чёрный список</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan: #00b4d8;
+  --cyan-dim: #0090b0;
+  --cyan-glow: rgba(0,180,216,.15);
+  --cyan-strong: rgba(0,180,216,.32);
+  --bg: #070b0e;
+  --bg2: #0c1318;
+  --bg3: #101c24;
+  --border: rgba(0,180,216,.18);
+  --border-h: rgba(0,180,216,.5);
+  --text: #c0d8e4;
+  --muted: #5a8090;
+  --red: #ff3c5f;
+  --red-glow: rgba(255,60,95,.15);
+  --orange: #ff8c42;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-weight:500;min-height:100vh;overflow-x:hidden}
+
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,180,216,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,.035) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;top:-30%;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(0,180,216,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:rgba(7,11,14,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
+.logo-icon{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid var(--cyan);box-shadow:0 0 14px var(--cyan-strong);background:var(--bg3)}
+.logo-texts{}
+.logo-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:#fff;line-height:1}
+.logo-sub{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--cyan);letter-spacing:2px;text-transform:uppercase}
+nav{display:flex;gap:4px}
+.nb{padding:7px 16px;border:1px solid transparent;background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:.2s}
+.nb:hover{color:var(--cyan);border-color:var(--border);background:var(--cyan-glow)}
+.nb.active{color:var(--cyan);border-color:var(--cyan);background:var(--cyan-glow);box-shadow:0 0 16px var(--cyan-strong)}
+
+/* MAIN */
+main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:44px 24px 80px}
+
+/* HERO */
+.hero{text-align:center;margin-bottom:48px}
+.hero-label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--cyan);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:12px}
+.hero-label::before,.hero-label::after{content:'';height:1px;width:48px}
+.hero-label::before{background:linear-gradient(90deg,transparent,var(--cyan))}
+.hero-label::after{background:linear-gradient(90deg,var(--cyan),transparent)}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(50px,8vw,86px);letter-spacing:6px;color:#fff;line-height:.95;margin-bottom:14px}
+.hero h1 span{color:var(--cyan);text-shadow:0 0 40px var(--cyan-strong)}
+.hero-desc{font-size:15px;color:var(--muted);max-width:500px;margin:0 auto 32px;line-height:1.65;letter-spacing:.3px}
+
+/* TABS */
+.tabs-wrap{display:flex;justify-content:center;margin-bottom:36px}
+.tabs{display:inline-flex;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:4px;gap:4px}
+.tab{padding:9px 26px;border:1px solid transparent;background:transparent;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:5px;transition:.22s;display:flex;align-items:center;gap:8px;color:var(--muted)}
+.tab:hover:not(.active){color:var(--text);border-color:var(--border);background:rgba(255,255,255,.025)}
+.tab.server.active{background:var(--red-glow);border-color:var(--red);color:var(--red);box-shadow:0 0 18px rgba(255,60,95,.12)}
+.tab.staff.active{background:var(--cyan-glow);border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 18px var(--cyan-strong)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 5px currentColor}
+
+/* SEARCH */
+.search-wrap{margin-bottom:32px}
+.search-box{display:flex;gap:10px}
+.search-inp-w{flex:1;position:relative}
+.si-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:15px}
+.s-inp{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:13px;padding:13px 16px 13px 43px;border-radius:6px;outline:none;transition:.2s;letter-spacing:1px}
+.s-inp::placeholder{color:var(--muted);opacity:.7}
+.s-inp:focus{border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-glow),0 0 18px var(--cyan-glow)}
+.s-btn{padding:13px 26px;background:var(--cyan);border:none;color:#070b0e;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:6px;transition:.2s;white-space:nowrap}
+.s-btn:hover{background:#fff;box-shadow:0 0 22px var(--cyan-strong)}
+.clr-btn{padding:13px 18px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:6px;transition:.2s;white-space:nowrap;display:none}
+.clr-btn:hover{border-color:var(--red);color:var(--red)}
+.clr-btn.show{display:block}
+
+/* STATS */
+.stats{display:flex;gap:12px;margin-bottom:28px}
+.stat{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.stat-ico{width:36px;height:36px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ico-red{background:var(--red-glow);color:var(--red);border:1px solid rgba(255,60,95,.28)}
+.ico-cyan{background:var(--cyan-glow);color:var(--cyan);border:1px solid var(--border)}
+.ico-org{background:rgba(255,140,66,.1);color:var(--orange);border:1px solid rgba(255,140,66,.28)}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;line-height:1;color:#fff}
+.stat-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+
+/* CARD */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .22s,box-shadow .22s,transform .18s;position:relative;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.card:hover{border-color:var(--border-h);box-shadow:0 6px 36px rgba(0,180,216,.09);transform:translateY(-2px)}
+.card.staff:hover{border-color:rgba(255,60,95,.45);box-shadow:0 6px 36px rgba(255,60,95,.07)}
+.card::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.025) 3px,rgba(0,0,0,.025) 4px);pointer-events:none;border-radius:10px}
+
+.c-head{display:flex;align-items:center;gap:13px;padding:16px 18px 12px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(0,180,216,.04),transparent 60%)}
+.card.staff .c-head{background:linear-gradient(135deg,rgba(255,60,95,.04),transparent 60%)}
+.av-wrap{position:relative;flex-shrink:0}
+.av{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--border);background:var(--bg3);display:block}
+.av-def{width:52px;height:52px;border-radius:50%;border:2px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--muted);flex-shrink:0}
+.av-badge{position:absolute;bottom:-2px;right:-2px;width:17px;height:17px;border-radius:50%;border:2px solid var(--bg2);display:flex;align-items:center;justify-content:center;font-size:8px}
+.badge-sv{background:var(--red)}
+.badge-st{background:var(--orange)}
+.c-info{flex:1;min-width:0}
+.c-nick{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:2px;color:#fff;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-user{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-id{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--cyan);margin-top:2px;opacity:.7}
+.card.staff .c-id{color:var(--orange)}
+.type-pill{flex-shrink:0;padding:4px 9px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.pill-sv{background:var(--red-glow);color:var(--red);border:1px solid rgba(255,60,95,.28)}
+.pill-st{background:rgba(255,140,66,.1);color:var(--orange);border:1px solid rgba(255,140,66,.28)}
+
+.c-body{padding:14px 18px}
+.r-label{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.r-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.r-short{font-size:13px;font-weight:700;color:var(--red);letter-spacing:.4px;margin-bottom:6px}
+.card.staff .r-short{color:var(--orange)}
+.r-full{font-size:12px;color:var(--text);line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+.c-foot{padding:8px 18px 14px;display:flex;align-items:center;justify-content:space-between}
+.c-date{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px}
+.exp-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;transition:.18s}
+.exp-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* EMPTY */
+.empty{text-align:center;padding:80px 40px;grid-column:1/-1;display:none}
+.empty.show{display:block}
+.empty-ico{font-size:52px;margin-bottom:18px;opacity:.28}
+.empty-t{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:4px;color:var(--muted);margin-bottom:8px}
+.empty-d{font-size:13px;color:var(--muted);opacity:.6}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(7,11,14,.87);backdrop-filter:blur(8px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .22s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border-h);border-radius:12px;width:100%;max-width:560px;box-shadow:0 20px 70px rgba(0,0,0,.6),0 0 50px rgba(0,180,216,.09);transform:scale(.95);transition:transform .22s;overflow:hidden}
+.overlay.open .modal{transform:scale(1)}
+.m-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(0,180,216,.04),transparent 60%)}
+.m-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:#fff}
+.m-close{width:30px;height:30px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:16px;border-radius:4px;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center}
+.m-close:hover{border-color:var(--red);color:var(--red)}
+.m-body{padding:22px}
+.m-profile{display:flex;align-items:center;gap:18px;margin-bottom:22px;padding:14px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)}
+.m-av{width:68px;height:68px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan);box-shadow:0 0 18px var(--cyan-strong);flex-shrink:0}
+.m-av-def{width:68px;height:68px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--muted);flex-shrink:0}
+.m-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.m-lbl{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.m-val{font-size:14px;font-weight:600;color:#fff;word-break:break-all}
+.m-val.mono{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--cyan)}
+.m-sec{margin-bottom:14px}
+.m-sec-t{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:7px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.m-rs{font-size:14px;font-weight:700;color:var(--red);margin-bottom:9px}
+.m-rf{font-size:13px;color:var(--text);line-height:1.65;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:11px 13px}
+
+/* RESPONSIVE */
+@media(max-width:768px){header{padding:0 16px}nav{display:none}.stats{flex-wrap:wrap}.grid{grid-template-columns:1fr}.search-box{flex-wrap:wrap}.s-btn,.clr-btn.show{width:100%}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <!-- SVG логотип Vexus (руль) -->
+    <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px;border-radius:50%;border:1.5px solid #00b4d8;box-shadow:0 0 14px rgba(0,180,216,.35);background:#0c1318">
+      <circle cx="50" cy="50" r="44" stroke="#00b4d8" stroke-width="6" fill="none"/>
+      <circle cx="50" cy="50" r="12" stroke="#00b4d8" stroke-width="5" fill="none"/>
+      <line x1="50" y1="6" x2="50" y2="38" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="50" y1="62" x2="50" y2="94" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="6" y1="50" x2="38" y2="50" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="62" y1="50" x2="94" y2="50" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="17" y1="17" x2="38" y2="38" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="62" y1="62" x2="83" y2="83" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="83" y1="17" x2="62" y2="38" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="38" y1="62" x2="17" y2="83" stroke="#00b4d8" stroke-width="6" stroke-linecap="round"/>
+    </svg>
+    <div class="logo-texts">
+      <div class="logo-name">VEXUS</div>
+      <div class="logo-sub">Blacklist System</div>
+    </div>
+  </div>
+  <nav>
+    <button class="nb active" onclick="setTab('server')">Сервер</button>
+    <button class="nb" onclick="setTab('staff')">Персонал</button>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="hero-label">Система безопасности</div>
+    <h1>ЧЁРНЫЙ <span>СПИСОК</span></h1>
+    <p class="hero-desc">База данных заблокированных пользователей сервера Vexus. Здесь хранится информация о нарушителях правил сообщества.</p>
+  </div>
+
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab server active" id="tab-server" onclick="switchList('server')">
+        <span class="dot"></span> Сервер
+      </button>
+      <button class="tab staff" id="tab-staff" onclick="switchList('staff')">
+        <span class="dot"></span> Персонал
+      </button>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <div class="search-box">
+      <div class="search-inp-w">
+        <span class="si-icon">🔍</span>
+        <input type="text" class="s-inp" id="searchInp" placeholder="Поиск по Discord ID, нику или юзернейму..." oninput="onSearch()">
+      </div>
+      <button class="s-btn" onclick="onSearch()">Найти</button>
+      <button class="clr-btn" id="clearBtn" onclick="clearSearch()">✕ Очистить</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-ico ico-red">⛔</div>
+      <div>
+        <div class="stat-num" id="statTotal">0</div>
+        <div class="stat-lbl">Всего в BL</div>
+      </div>
+    </div>
+    <div class="stat">
+      <div class="stat-ico ico-cyan">🖥️</div>
+      <div>
+        <div class="stat-num" id="statServer">0</div>
+        <div class="stat-lbl">Серверный BL</div>
+      </div>
+    </div>
+    <div class="stat">
+      <div class="stat-ico ico-org">👮</div>
+      <div>
+        <div class="stat-num" id="statStaff">0</div>
+        <div class="stat-lbl">Персонал BL</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" id="cardsGrid">
+    <div class="empty show" id="emptyState">
+      <div class="empty-ico">📋</div>
+      <div class="empty-t">Список пуст</div>
+      <div class="empty-d">Записи будут добавлены через Discord бота</div>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL -->
+<div class="overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalBox">
+    <div class="m-head">
+      <span class="m-title" id="mTitle">ДЕТАЛИ ЗАПИСИ</span>
+      <button class="m-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="m-body" id="mBody"></div>
+  </div>
+</div>
+
+<script>
+// =================== CONFIG ===================
+// Замени на свой GitHub raw URL после загрузки blacklist.json в репозиторий
+// Формат: https://raw.githubusercontent.com/ТВО_ИМЯПОЛЬЗОВАТЕЛЯ/ИМЯ_РЕПО/main/blacklist.json
+const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/blacklist.json';
+
+// =================== STATE ===================
+let allEntries = [];
+let currentList = 'server';
+
+// =================== INIT ===================
+async function init() {
+  showLoader(true);
+  await fetchBlacklist();
+  showLoader(false);
+}
+
+// =================== FETCH ===================
+async function fetchBlacklist() {
+  try {
+    // cache-bust чтобы браузер не кешировал старую версию
+    const url = GITHUB_RAW_URL + '?t=' + Date.now();
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+
+    // Поддерживаем оба формата: {server:[...], staff:[...]} и плоский [...]
+    let entries = [];
+    if (Array.isArray(data)) {
+      entries = data;
+    } else {
+      const server = (data.server || []).map(e => ({ ...e, type: 'server', discord_id: e.discord_id || e.id }));
+      const staff  = (data.staff  || []).map(e => ({ ...e, type: 'staff',  discord_id: e.discord_id || e.id }));
+      entries = [...server, ...staff];
+    }
+
+    // Сортируем по дате (новые первые)
+    allEntries = entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+    updateStats();
+    renderList();
+  } catch (err) {
+    console.error('Не удалось загрузить blacklist.json:', err);
+    showError();
+  }
+}
+
+function showLoader(show) {
+  let loader = document.getElementById('gridLoader');
+  if (!loader) {
+    loader = document.createElement('div');
+    loader.id = 'gridLoader';
+    loader.style.cssText = 'display:flex;justify-content:center;padding:60px;grid-column:1/-1';
+    loader.innerHTML = '<div style="width:34px;height:34px;border:2px solid rgba(0,180,216,.2);border-top-color:#00b4d8;border-radius:50%;animation:spin .8s linear infinite"></div>';
+    document.getElementById('cardsGrid').prepend(loader);
+  }
+  loader.style.display = show ? 'flex' : 'none';
+}
+
+function showError() {
+  const grid = document.getElementById('cardsGrid');
+  const existing = document.getElementById('loadError');
+  if (existing) return;
+  const div = document.createElement('div');
+  div.id = 'loadError';
+  div.style.cssText = 'grid-column:1/-1;text-align:center;padding:60px 40px';
+  div.innerHTML = `
+    <div style="font-size:44px;margin-bottom:16px;opacity:.3">⚠️</div>
+    <div style="font-family:Bebas Neue,sans-serif;font-size:28px;letter-spacing:3px;color:#5a8090;margin-bottom:8px">НЕ УДАЛОСЬ ЗАГРУЗИТЬ</div>
+    <div style="font-size:13px;color:#5a8090;opacity:.7;margin-bottom:20px">Проверь URL в GITHUB_RAW_URL или подожди немного</div>
+    <button onclick="location.reload()" style="padding:10px 24px;background:#00b4d8;border:none;color:#070b0e;font-family:Rajdhani,sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:6px">Обновить</button>
+  `;
+  grid.appendChild(div);
+}
+
+function updateStats() {
+  const server = allEntries.filter(e => e.type === 'server').length;
+  const staff  = allEntries.filter(e => e.type === 'staff').length;
+  document.getElementById('statTotal').textContent  = allEntries.length;
+  document.getElementById('statServer').textContent = server;
+  document.getElementById('statStaff').textContent  = staff;
+}
+
+function updateStats() {
+  const server = allEntries.filter(e => e.type === 'server').length;
+  const staff = allEntries.filter(e => e.type === 'staff').length;
+  document.getElementById('statTotal').textContent = allEntries.length;
+  document.getElementById('statServer').textContent = server;
+  document.getElementById('statStaff').textContent = staff;
+}
+
+// =================== TABS ===================
+function switchList(type) {
+  currentList = type;
+  document.getElementById('tab-server').className = 'tab server' + (type === 'server' ? ' active' : '');
+  document.getElementById('tab-staff').className = 'tab staff' + (type === 'staff' ? ' active' : '');
+  document.querySelectorAll('nav .nb').forEach((btn, i) => {
+    btn.className = 'nb' + ((i === 0 && type === 'server') || (i === 1 && type === 'staff') ? ' active' : '');
+  });
+  clearSearch();
+  renderList();
+}
+
+function setTab(type) { switchList(type); }
+
+// =================== SEARCH ===================
+function onSearch() {
+  const q = document.getElementById('searchInp').value.trim().toLowerCase();
+  const clearBtn = document.getElementById('clearBtn');
+  if (q) clearBtn.classList.add('show');
+  else clearBtn.classList.remove('show');
+  renderList(q);
+}
+
+function clearSearch() {
+  document.getElementById('searchInp').value = '';
+  document.getElementById('clearBtn').classList.remove('show');
+  renderList('');
+}
+
+// =================== RENDER ===================
+function renderList(query = '') {
+  const list = allEntries.filter(e => e.type === currentList);
+  const filtered = query
+    ? list.filter(e => {
+        const discordId = (e.discord_id || e.id || '').toLowerCase();
+        return discordId.includes(query) ||
+          (e.nick || '').toLowerCase().includes(query) ||
+          (e.username || '').toLowerCase().includes(query) ||
+          (e.tags || '').toLowerCase().includes(query);
+      })
+    : list;
+
+  const grid = document.getElementById('cardsGrid');
+  const empty = document.getElementById('emptyState');
+
+  // Remove old cards
+  grid.querySelectorAll('.card').forEach(c => c.remove());
+
+  if (filtered.length === 0) {
+    empty.classList.add('show');
+    empty.querySelector('.empty-t').textContent = query ? 'Ничего не найдено' : 'Список пуст';
+    empty.querySelector('.empty-d').textContent = query ? 'Попробуйте изменить запрос' : 'Записи будут добавлены через Discord бота';
+    return;
+  }
+
+  empty.classList.remove('show');
+
+  filtered.forEach((entry, idx) => {
+    const card = createCard(entry, idx);
+    grid.appendChild(card);
+  });
+}
+
+function createCard(e, idx) {
+  const isStaff = e.type === 'staff';
+  const div = document.createElement('div');
+  div.className = 'card' + (isStaff ? ' staff' : '');
+  div.style.animationDelay = (idx * 0.05) + 's';
+
+  const discordId = e.discord_id || e.id || '—';
+  const dateStr = e.date ? new Date(e.date).toLocaleDateString('ru-RU', {day:'2-digit',month:'2-digit',year:'numeric'}) : '—';
+  const initial = (e.nick || '?')[0].toUpperCase();
+
+  const avHTML = e.avatar
+    ? `<img class="av" src="${e.avatar}" alt="" onerror="this.outerHTML='<div class=\\'av-def\\'>${initial}</div>'">`
+    : `<div class="av-def">${initial}</div>`;
+
+  const badgeClass = isStaff ? 'badge-st' : 'badge-sv';
+  const pillClass  = isStaff ? 'pill-st'  : 'pill-sv';
+  const pillText   = isStaff ? 'ПЕРСОНАЛ' : 'СЕРВЕР';
+
+  div.innerHTML = `
+    <div class="c-head">
+      <div class="av-wrap">
+        ${avHTML}
+        <div class="av-badge ${badgeClass}">${isStaff ? '👮' : '⛔'}</div>
+      </div>
+      <div class="c-info">
+        <div class="c-nick">${esc(e.nick || '—')}</div>
+        <div class="c-user">@${esc(e.username || '—')}</div>
+        <div class="c-id">${esc(discordId)}</div>
+      </div>
+      <span class="type-pill ${pillClass}">${pillText}</span>
+    </div>
+    <div class="c-body">
+      <div class="r-label">Причина</div>
+      <div class="r-short">${esc(e.tags || '—')}</div>
+      <div class="r-full">${esc(e.reason || '—')}</div>
+    </div>
+    <div class="c-foot">
+      <span class="c-date">${dateStr}</span>
+      <button class="exp-btn" onclick="openModal('${esc(discordId)}')">Подробнее →</button>
+    </div>`;
+  return div;
+}
+
+// =================== MODAL ===================
+function openModal(discordId) {
+  const e = allEntries.find(x => (x.discord_id || x.id) === discordId);
+  if (!e) return;
+  const isStaff = e.type === 'staff';
+  const dateStr = e.date ? new Date(e.date).toLocaleString('ru-RU') : '—';
+  const initial = (e.nick || '?')[0].toUpperCase();
+  const displayId = e.discord_id || e.id || '—';
+
+  const avHTML = e.avatar
+    ? `<img class="m-av" src="${e.avatar}" alt="" onerror="this.outerHTML='<div class=\\"m-av-def\\">${initial}</div>'">`
+    : `<div class="m-av-def">${initial}</div>`;
+
+  document.getElementById('mTitle').textContent = isStaff ? 'ПЕРСОНАЛ — ДЕТАЛИ' : 'СЕРВЕР — ДЕТАЛИ';
+  document.getElementById('mBody').innerHTML = `
+    <div class="m-profile">
+      ${avHTML}
+      <div class="m-grid">
+        <div><div class="m-lbl">Ник</div><div class="m-val">${esc(e.nick||'—')}</div></div>
+        <div><div class="m-lbl">Юзернейм</div><div class="m-val">@${esc(e.username||'—')}</div></div>
+        <div><div class="m-lbl">Discord ID</div><div class="m-val mono">${esc(displayId)}</div></div>
+        <div><div class="m-lbl">Дата</div><div class="m-val mono" style="font-size:11px">${dateStr}</div></div>
+      </div>
+    </div>
+    <div class="m-sec">
+      <div class="m-sec-t">Причина</div>
+      <div class="m-rs">${esc(e.tags||'—')}</div>
+      <div class="m-rf">${esc(e.reason||'—')}</div>
+    </div>`;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(ev) {
+  if (ev.target === document.getElementById('modalOverlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// =================== UTILS ===================
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Keyboard shortcut
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModalDirect();
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('searchInp').focus();
+  }
+});
+
+init();
+</script>
+</body>
+</html>
