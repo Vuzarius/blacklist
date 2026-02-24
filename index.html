@@ -197,7 +197,7 @@
     </div>
     <div class="header-right">
       <div class="admin-badge hidden" id="admin-badge"><div class="admin-dot"></div>ADMIN</div>
-      <button class="btn-add hidden" id="btn-add" onclick="openModal('add-overlay')">+ Добавить запись</button>
+
       <button class="btn-logout" onclick="doLogout()">Выйти</button>
     </div>
   </div>
@@ -215,45 +215,6 @@
   <div class="empty" id="empty-state"><div class="empty-icon">📭</div><p>Список пуст</p></div>
 </div>
 
-<div class="overlay" id="add-overlay" onclick="bgClose(event,'add-overlay')">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">НОВАЯ ЗАПИСЬ</div>
-      <button class="btn-close" onclick="closeModal('add-overlay')">✕</button>
-    </div>
-    <div class="form-grid">
-      <div class="field">
-        <label>Тип чёрного списка</label>
-        <div class="type-row">
-          <div class="type-item"><input type="radio" name="bl-type" id="type-server" value="server" checked><label for="type-server" class="server-lbl">⛔ Blacklist Сервера</label></div>
-          <div class="type-item"><input type="radio" name="bl-type" id="type-staff" value="staff"><label for="type-staff" class="staff-lbl">🔒 Blacklist Персонала</label></div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="field"><label>Ник (отображаемое имя)</label><input type="text" id="f-nick" placeholder="Артём Рыков"></div>
-        <div class="field"><label>Discord юзернейм</label><input type="text" id="f-username" placeholder="artyom_rykov"></div>
-      </div>
-      <div class="field">
-        <label>Discord ID — введи и нажми «Загрузить»</label>
-        <div style="display:flex;gap:8px">
-          <input type="text" id="f-id" placeholder="389201847362" maxlength="20" style="flex:1">
-          <button type="button" onclick="fetchDiscord()" id="fetch-btn" style="background:rgba(74,158,255,0.12);border:1px solid rgba(74,158,255,0.35);color:#4a9eff;padding:0 16px;border-radius:10px;font-family:Syne,sans-serif;font-weight:700;font-size:11px;cursor:pointer;white-space:nowrap;letter-spacing:0.05em">⬇ Загрузить</button>
-        </div>
-        <div id="fetch-status" style="font-size:10px;margin-top:4px;min-height:14px"></div>
-      </div>
-      <div class="field">
-        <label>Аватар</label>
-        <div style="display:flex;align-items:center;gap:10px">
-          <img id="avatar-preview" src="" style="width:42px;height:42px;border-radius:50%;border:2px solid var(--border);object-fit:cover;display:none">
-          <input type="text" id="f-avatar" placeholder="Заполнится автоматически или вставь ссылку" style="flex:1">
-        </div>
-      </div>
-      <div class="field"><label>Теги / причины (через запятую)</label><input type="text" id="f-tags" placeholder="Флуд, Токсичность"></div>
-      <div class="field"><label>Подробная причина</label><textarea id="f-reason" placeholder="Опиши подробно..."></textarea></div>
-      <button class="btn-submit" onclick="addEntry()">Добавить в чёрный список</button>
-    </div>
-  </div>
-</div>
 
 <div class="overlay" id="del-overlay" onclick="bgClose(event,'del-overlay')">
   <div class="modal confirm-modal">
@@ -271,7 +232,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAz2l9DpNAZjUkpBRAttlFgRIlIOLAktUs",
@@ -316,34 +277,6 @@ onValue(blRef, (snapshot) => {
   document.getElementById('login-screen').classList.remove('hidden');
 });
 
-window.fetchDiscord = async function() {
-  const id = document.getElementById('f-id').value.trim();
-  if (!id || !/^\d{15,20}$/.test(id)) { setFetchStatus('Введи корректный Discord ID (15-20 цифр)', 'var(--server-accent)'); return; }
-  const btn = document.getElementById('fetch-btn');
-  btn.textContent = '⏳ Загрузка...'; btn.disabled = true;
-  setFetchStatus('Запрашиваю данные...', 'var(--muted)');
-  try {
-    const res = await fetch(`https://api.lanyard.rest/v1/users/${id}`);
-    const data = await res.json();
-    if (data.success && data.data && data.data.discord_user) {
-      const u = data.data.discord_user;
-      const avatar = u.avatar ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=256` : `https://cdn.discordapp.com/embed/avatars/${parseInt(u.discriminator||0) % 5}.png`;
-      document.getElementById('f-username').value = u.username || '';
-      document.getElementById('f-nick').value = u.global_name || u.username || '';
-      document.getElementById('f-avatar').value = avatar;
-      const img = document.getElementById('avatar-preview'); img.src = avatar; img.style.display = 'block';
-      setFetchStatus('✓ Данные загружены!', 'var(--green)');
-    } else {
-      const avatarUrl = `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(id) % 6n)}.png`;
-      document.getElementById('f-avatar').value = avatarUrl;
-      const img = document.getElementById('avatar-preview'); img.src = avatarUrl; img.style.display = 'block';
-      setFetchStatus('Юзернейм не найден — заполни вручную.', 'var(--staff-accent)');
-    }
-  } catch(e) { setFetchStatus('Ошибка загрузки. Заполни вручную.', 'var(--server-accent)'); }
-  btn.textContent = '⬇ Загрузить'; btn.disabled = false;
-}
-
-function setFetchStatus(msg, color) { const el = document.getElementById('fetch-status'); el.textContent = msg; el.style.color = color; }
 
 window.switchTab = function(tab) {
   document.getElementById('tab-admin').classList.toggle('active', tab === 'admin');
@@ -351,6 +284,12 @@ window.switchTab = function(tab) {
   document.getElementById('admin-form').classList.toggle('hidden', tab !== 'admin');
   document.getElementById('guest-form').classList.toggle('hidden', tab !== 'guest');
   document.getElementById('login-error').classList.remove('show');
+}
+
+window.setFilter = function(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => { b.className = 'filter-btn' + (b.dataset.filter === f ? ` active-${f}` : ''); });
+  render();
 }
 
 window.togglePw = function() {
@@ -376,7 +315,6 @@ window.enterApp = function(admin) {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('main-page').classList.remove('hidden');
   document.getElementById('admin-badge').classList.toggle('hidden', !isAdmin);
-  document.getElementById('btn-add').classList.toggle('hidden', !isAdmin);
   render();
 }
 
