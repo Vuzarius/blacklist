@@ -10,6 +10,17 @@
       "type": "server",
       "date": "2026-02-24T19:00:33.517882",
       "added_by": "927519847884148797"
+    },
+    {
+      "nick": "Majestät",
+      "username": ".majestat",
+      "id": "542288890661175296",
+      "avatar": "https://cdn.discordapp.com/avatars/542288890661175296/999092d716f41afabfa292a54ee2da33.png?size=1024",
+      "tags": "УБЗ",
+      "reason": "Угроза безопастности проекта",
+      "type": "server",
+      "date": "2026-03-05T20:14:41.691913",
+      "added_by": "927519847884148797"
     }
   ],
   "staff": [
@@ -26,4 +37,3 @@
     }
   ]
 }
-
