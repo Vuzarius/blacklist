@@ -298,9 +298,19 @@ async function fetchData(){
     const r=await fetch(GITHUB_RAW_URL+'?t='+Date.now());
     if(!r.ok)throw new Error('HTTP '+r.status);
     const data=await r.json();
-    const entries = Array.isArray(data) ? data : [];
-    allEntries = entries.map(e=>({...e, discord_id: e.discord_id||e.id}))
-                        .sort((a,b)=>new Date(b.date)-new Date(a.date));
+    let entries = [];
+    if (Array.isArray(data)) {
+      entries = data;
+    } else {
+      // старый формат {server:[...], staff:[...]}
+      entries = [
+        ...(data.server || []),
+        ...(data.staff  || [])
+      ];
+    }
+    allEntries = entries
+      .map(e => ({...e, discord_id: e.discord_id || e.id}))
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
     document.getElementById('hcount').textContent=allEntries.length+' '+plural(allEntries.length);
     removeLoader();renderList();
   }catch(e){console.error(e);removeLoader();showError()}
