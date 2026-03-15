@@ -1,40 +1,26 @@
-{
-  "server": [
-    {
-      "nick": "Apelsin4ik",
-      "username": "soda_crackhouse",
-      "id": "959414199509975091",
-      "avatar": "https://cdn.discordapp.com/avatars/959414199509975091/e65422938db2b5b844a02c7b4e0728d4.png?size=1024",
-      "tags": "Угроза безопасности проекта",
-      "reason": "Чрезмерная токсичность, неадекватное поведение, провокации на конфликты и прочее...",
-      "type": "server",
-      "date": "2026-02-24T19:00:33.517882",
-      "added_by": "927519847884148797"
-    },
-    {
-      "nick": "Majestät",
-      "username": ".majestat",
-      "id": "542288890661175296",
-      "avatar": "https://cdn.discordapp.com/avatars/542288890661175296/999092d716f41afabfa292a54ee2da33.png?size=1024",
-      "tags": "УБЗ, БРКРМП",
-      "reason": "Угроза безопастности проекта | Бан по решеннию Комитета по Развитию и Модернизации Проекта",
-      "type": "server",
-      "date": "2026-03-05T20:14:41.691913",
-      "added_by": "927519847884148797"
-    }
-  ],
-  "staff": [
-    {
-      "nick": "crystalcastles.",
-      "username": "crystalcastles.",
-      "id": "725029884266545213",
-      "avatar": "https://cdn.discordapp.com/avatars/725029884266545213/dd1b022cf55ed21e174df0dea467f2c9.png?size=1024",
-      "tags": "-",
-      "reason": "-",
-      "type": "staff",
-      "date": "2026-02-24T18:44:51.171200",
-      "added_by": "927519847884148797"
-    }
-  ]
-}
-
+[
+  {
+    "nick": "Apelsin4ik",
+    "username": "soda_crackhouse",
+    "id": "959414199509975091",
+    "avatar": "https://cdn.discordapp.com/avatars/959414199509975091/e65422938db2b5b844a02c7b4e0728d4.png?size=1024",
+    "reason": "Чрезмерная токсичность, неадекватное поведение, провокации на конфликты и прочее...",
+    "date": "2026-02-24T19:00:33.517882"
+  },
+  {
+    "nick": "Majestät",
+    "username": ".majestat",
+    "id": "542288890661175296",
+    "avatar": "https://cdn.discordapp.com/avatars/542288890661175296/999092d716f41afabfa292a54ee2da33.png?size=1024",
+    "reason": "Угроза безопастности проекта | Бан по решеннию Комитета по Развитию и Модернизации Проекта",
+    "date": "2026-03-05T20:14:41.691913"
+  },
+  {
+    "nick": "crystalcastles.",
+    "username": "crystalcastles.",
+    "id": "725029884266545213",
+    "avatar": "https://cdn.discordapp.com/avatars/725029884266545213/dd1b022cf55ed21e174df0dea467f2c9.png?size=1024",
+    "reason": "-",
+    "date": "2026-02-24T18:44:51.171200"
+  }
+]
