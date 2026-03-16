@@ -189,9 +189,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
 .m-value{font-size:13px;font-weight:500;color:var(--text);word-break:break-all}
 .m-value.mono{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2)}
 .m-reason{background:rgba(208,96,96,.07);border:1px solid rgba(208,96,96,.18);border-radius:10px;overflow:hidden}
-.m-reason-head{padding:11px 16px;border-bottom:1px solid rgba(208,96,96,.12)}
-.m-reason-tag{font-size:13px;font-weight:600;color:var(--red2)}
-.m-reason-body{padding:12px 16px;font-size:13px;color:var(--t2);line-height:1.65}
+
+
+.m-reason-body{padding:14px 16px;font-size:13px;color:var(--t2);line-height:1.65}
 
 /* ══════════════════════════════
    MOBILE  (≤ 700px)
@@ -390,9 +390,8 @@ function openModal(discordId){
       <div class="m-field"><div class="m-label">Discord ID</div><div class="m-value mono">${esc(id)}</div></div>
       <div class="m-field"><div class="m-label">Дата</div><div class="m-value mono" style="font-size:10px">${dateStr}</div></div>
     </div>
-    ${e.tags||e.reason?`<div class="m-reason">
-      <div class="m-reason-head"><div class="m-reason-tag">${esc(e.tags||'—')}</div></div>
-      ${e.reason?`<div class="m-reason-body">${esc(e.reason)}</div>`:''}
+    ${e.reason&&e.reason!=='-'?`<div class="m-reason">
+      <div class="m-reason-body">${esc(e.reason)}</div>
     </div>`:''}`;
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow='hidden';
