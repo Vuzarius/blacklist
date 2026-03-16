@@ -229,9 +229,18 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
 }
 
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══ SNOW ═══ */
+.snow-canvas{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:50;
+}
 </style>
 </head>
 <body>
+
+<canvas class="snow-canvas" id="snowCanvas"></canvas>
 <div class="layout">
 
   <!-- LEFT -->
@@ -403,6 +412,72 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function plural(n){const v=Math.abs(n)%100,v1=v%10;if(v>10&&v<20)return 'записей';if(v1===1)return 'запись';if(v1>=2&&v1<=4)return 'записи';return 'записей'}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalDirect()});
 init();
+
+// ═══ SNOW ═══
+(function(){
+  const canvas = document.getElementById('snowCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, flakes = [];
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const COUNT = 120;
+
+  function rand(min, max){ return Math.random()*(max-min)+min; }
+
+  function createFlake(){
+    return {
+      x:     rand(0, W),
+      y:     rand(-20, -5),
+      r:     rand(1, 3.2),
+      speed: rand(0.6, 2.2),
+      drift: rand(-0.3, 0.3),
+      opacity: rand(0.25, 0.75),
+      wobble: rand(0, Math.PI*2),
+      wobbleSpeed: rand(0.01, 0.03),
+    };
+  }
+
+  for(let i=0;i<COUNT;i++){
+    const f = createFlake();
+    f.y = rand(0, H); // start scattered
+    flakes.push(f);
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    flakes.forEach(f => {
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(220,235,255,${f.opacity})`;
+      ctx.fill();
+    });
+  }
+
+  function update(){
+    flakes.forEach(f => {
+      f.wobble += f.wobbleSpeed;
+      f.x += f.drift + Math.sin(f.wobble)*0.4;
+      f.y += f.speed;
+      if(f.y > H+10 || f.x < -10 || f.x > W+10){
+        Object.assign(f, createFlake());
+      }
+    });
+  }
+
+  function loop(){
+    update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
 </script>
 </body>
 </html>
